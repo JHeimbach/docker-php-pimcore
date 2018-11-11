@@ -1,0 +1,12 @@
+#!/bin/sh
+
+sed -i -e 's/<<PHP_MAX_EXECUTION_TIME>>/'${PHP_MAX_EXECUTION_TIME}'/g' \
+       -e 's/<<PHP_MAX_INPUT_TIME>>/'${PHP_MAX_INPUT_TIME}'/g' \
+       -e 's/<<PHP_MEMORY_LIMIT>>/'${PHP_MEMORY_LIMIT}'/g' \
+       -e 's/<<PHP_ERROR_REPORTING>>/'${PHP_ERROR_REPORTING}'/g' \
+       -e 's/<<PHP_DISPLAY_ERRORS>>/'${PHP_DISPLAY_ERRORS}'/g' \
+       -e 's/<<PHP_DISPLAY_STARTUP_ERRORS>>/'${PHP_DISPLAY_STARTUP_ERRORS}'/g' \
+       -e 's/<<PHP_POST_MAX_SIZE>>/'${PHP_POST_MAX_SIZE}'/g' \
+       -e 's/<<PHP_UPLOAD_MAX_FILESIZE>>/'${PHP_UPLOAD_MAX_FILESIZE}'/g' \
+       -e 's/<<PHP_DATE_TIMEZONE>>/'${PHP_DATE_TIMEZONE}'/g' \
+       $PHP_CONF_FILE
