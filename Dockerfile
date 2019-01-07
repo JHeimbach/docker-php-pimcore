@@ -14,7 +14,7 @@ RUN pecl install apcu
 RUN docker-php-ext-enable apcu
 
 # Install Build Tools (getting removed later)
-RUN apt-get -y --no-install-recommends install autoconf automake libtool nasm make pkg-config libz-dev build-essential g++
+RUN apt-get -y --no-install-recommends install autoconf automake libtool nasm cmake make pkg-config libz-dev build-essential g++
 
 RUN cd ~
 
@@ -26,11 +26,8 @@ RUN wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkh
 # Install Mozjpeg
 RUN git clone https://github.com/mozilla/mozjpeg.git  \
         && cd mozjpeg \
-        && autoreconf -fiv \
-        && ./configure \
-        && make \
-        && make install \
-        && ln -s /opt/mozjpeg/bin/cjpeg /usr/bin/cjpeg \
+        && cmake -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr/local -DCMAKE_INSTALL_LIBDIR=/usr/local/lib64 . \
+        && make install prefix=/usr/local libdir=/usr/local/lib64 \
         && cd .. \
         && rm -rf mozjpeg
 
@@ -61,6 +58,6 @@ RUN wget http://prdownloads.sourceforge.net/advancemame/advancecomp-1.17.tar.gz 
         && rm -rf advancecomp-1.17
 
 # Cleanup
-RUN apt-get remove -y autoconf automake libtool nasm make pkg-config libz-dev build-essential g++ \
+RUN apt-get remove -y autoconf automake libtool nasm cmake make pkg-config libz-dev build-essential g++ \
         && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
