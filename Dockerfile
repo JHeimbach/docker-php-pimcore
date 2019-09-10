@@ -1,11 +1,11 @@
 FROM jheimbach/php-basic:latest
 
 RUN rm -rf /var/lib/apt/lists/* && apt-get update
-RUN apt-get install -y --no-install-recommends libbz2-dev zlib1g-dev libicu-dev g++ libmagickwand-dev libav-tools html2text ghostscript libreoffice pngcrush jpegoptim exiftool poppler-utils wget
+RUN apt-get install -y --no-install-recommends libbz2-dev zlib1g-dev libicu-dev g++ libmagickwand-dev ffmpeg html2text ghostscript libreoffice pngcrush jpegoptim exiftool poppler-utils wget
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN docker-php-ext-install mcrypt exif bz2 intl
+RUN docker-php-ext-install exif bz2 intl
 
 RUN pecl install imagick
 RUN docker-php-ext-enable imagick
